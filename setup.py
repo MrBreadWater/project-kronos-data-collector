@@ -70,7 +70,7 @@ additional_setup_parameters = {}
 #	import os
 #	os.system("python -m pip install boto")
 
-from setuptools import setup
+#from setuptools import setup
 
 try:
 	import octoprint_setuptools
