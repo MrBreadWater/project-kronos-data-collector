@@ -15,15 +15,29 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                              octoprint.plugin.RestartNeedingPlugin):
 
     def get_settings_defaults(self):
-        return dict(
-            enabled=True
-        )
+        return dict(enabled=True)
 
     def get_template_configs(self):
         return [
-            dict(type='settings', custom_bindings=False, template='fail_data_template.jinja2')
+            dict(type='settings', custom_bindings=False, template='fail_data_settings.jinja2')
         ]
+	def get_update_information(self):
+        return dict(
+            kronos_data_collector=dict(
+                displayName="Kronos Data Collector",
+                displayVersion=self._plugin_version,
 
+                # version check: github repository
+                type="github_release",
+                user="MrBreadWater",
+                repo="project-kronos-data-collector",
+                current=self._plugin_version,
+
+                # update method: pip
+                pip="https://github.com/MrBreadWater/project-kronos-data-collector/archive/{target_version}.zip"
+            )
+        )
+		
     @property
     def enablePlugin(self):
         return self._settings.get_boolean(['enablePlugin'])
@@ -32,7 +46,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         from octoprint.events import Events
         if event == Events.MOVIE_DONE:
             self.upload_timelapse(payload)
-		if event == Events.PrintCancelled
+		if event == Events.PRINT_CANCELLED
 			self.upload_picture()
 	def upload_picture(self):
 		if enablePlugin():
@@ -54,7 +68,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
             #self._logger.info('Deleted %s from local disk.' % file_name)
 
 
-	def upload_file(file, filename, pic = True)
+	def upload_file(self, file, filename, pic = True)
 		
 		self._logger.info('Uploading %s to S3 Server...' % file_name)
 		if pic = False:	
@@ -107,8 +121,8 @@ def __plugin_load__():
     global __plugin_implementation__
     __plugin_implementation__ = KronosDataCollector()
 
- #   global __plugin_hooks__
-  #  __plugin_hooks__ = {
-   #     "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
-    #}
+    global __plugin_hooks__
+    __plugin_hooks__ = {
+        "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+    }
 
