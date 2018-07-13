@@ -14,7 +14,7 @@ plugin_package = "octoprint_kronos_data_collector"
 plugin_name = "Kronos Data Collector"
 
 # The plugin's version. Can be overwritten within OctoPrint's internal data via __plugin_version__ in the plugin module
-plugin_version = "0.0.1"
+plugin_version = "0.0.4"
 
 # The plugin's description. Can be overwritten within OctoPrint's internal data via __plugin_description__ in the plugin
 # module
@@ -27,7 +27,7 @@ plugin_author = "Jacob Paniagua"
 plugin_author_email = "jpaniaguua1541@gmail.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
-plugin_url = "https://www.reddit.com/r/3Dprinting/comments/8x7pmt/building_a_program_to_autodetect_failed_prints/"
+plugin_url = "https://github.com/MrBreadWater/project-kronos-data-collector"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
 plugin_license = "AGPLv3"
