@@ -4,36 +4,36 @@
 ### Do not forget to adjust the following variables to your own plugin.
 
 # The plugin's identifier, has to be unique
-plugin_identifier = "dropbox_timelapse"
+plugin_identifier = "kronos_data_collector"
 
 # The plugin's python package, should be "octoprint_<plugin identifier>", has to be unique
-plugin_package = "octoprint_dropbox_timelapse"
+plugin_package = "octoprint_kronos_data_collector"
 
 # The plugin's human readable name. Can be overwritten within OctoPrint's internal data via __plugin_name__ in the
 # plugin module
-plugin_name = "OctoPrint-Dropbox-Timelapse"
+plugin_name = "Kronos Data Collector"
 
 # The plugin's version. Can be overwritten within OctoPrint's internal data via __plugin_version__ in the plugin module
-plugin_version = "0.1.2"
+plugin_version = "0.0.1"
 
 # The plugin's description. Can be overwritten within OctoPrint's internal data via __plugin_description__ in the plugin
 # module
-plugin_description = """Automatically upload rendered timelapses to Dropbox. Can also delete after upload to save space on the Raspberry Pi SD Card."""
+plugin_description = """On canceling or rendering a timelapse, the plugin will automatically upload an image or timelapse to help Project Kronos (visual neural network based automatic print failure detection)"""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
-plugin_author = "Justin Slay"
+plugin_author = "Jacob Paniagua"
 
 # The plugin's author's mail address.
-plugin_author_email = "justin.slay@gmail.com"
+plugin_author_email = "jpaniaguua1541@gmail.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
-plugin_url = "https://github.com/jslay88/OctoPrint-Dropbox-Timelapse"
+plugin_url = "https://www.reddit.com/r/3Dprinting/comments/8x7pmt/building_a_program_to_autodetect_failed_prints/"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
 plugin_license = "AGPLv3"
 
 # Any additional requirements besides OctoPrint should be listed here
-plugin_requires = ['dropbox']
+plugin_requires = ['boto']
 
 ### --------------------------------------------------------------------------------------------------------------------
 ### More advanced options that you usually shouldn't have to touch follow after this point
@@ -62,6 +62,15 @@ plugin_ignored_packages = []
 additional_setup_parameters = {}
 
 ########################################################################################################################
+#auto-install boto
+
+#try: 
+#	import boto
+#except: 
+#	import os
+#	os.system("python -m pip install boto")
+
+#from setuptools import setup
 
 from setuptools import setup
 
