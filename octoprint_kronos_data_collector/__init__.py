@@ -14,7 +14,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                              octoprint.plugin.TemplatePlugin,
                              octoprint.plugin.RestartNeedingPlugin):
 
-    def get_settings_defaults(self):
+    def on_after_startup(self):
+        self._logger.info("Plugin Succesfully running!")
+	def get_settings_defaults(self):
         return dict(enablePlugin=True)
 
     def get_template_configs(self):
@@ -117,12 +119,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 __plugin_name__ = "Kronos Data Collector"
 
 
-def __plugin_load__():
-    global __plugin_implementation__
-    __plugin_implementation__ = KronosDataCollector()
 
-    global __plugin_hooks__
-    __plugin_hooks__ = {
-        "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
-    }
+__plugin_implementation__ = KronosDataCollector()
 
+__plugin_hooks__ = {
+	"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+}
