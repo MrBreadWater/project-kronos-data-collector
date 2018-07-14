@@ -42,8 +42,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
             )
         )
 		
-     def upload_file(self, file, filename, pic = True):
-
+    def upload_file(self, file, filename, pic = True):
         self._logger.info('Uploading %s to S3 Server...' % file_name)
         if pic == False:	
                 try:
