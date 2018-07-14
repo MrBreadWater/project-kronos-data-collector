@@ -52,6 +52,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 	if event == Events.PRINT_CANCELLED:
        	        self.upload_picture()
     def upload_picture(self):
+        enablePlugin = self.enablePlugin
         if enablePlugin():
                 random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + 'jpg'
                 urllib.urlretrieve ("http://localhost:8080/?action=snapshot", random_filename)
@@ -59,6 +60,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 upload_file(random_filename, random_filename, pic = True)
                 os.remove(random_filename)
     def upload_timelapse(self, payload):
+        enablePlugin = self.enablePlugin
         if enablePlugin():
                 path = payload['movie']
                 file_name = payload['movie_basename']
