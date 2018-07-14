@@ -71,7 +71,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
             #self._logger.info('Deleted %s from local disk.' % file_name)
 
 
-    def upload_file(self, file, filename, pic = True)
+    def upload_file(self, file, filename, pic = True):
 		
 	self._logger.info('Uploading %s to S3 Server...' % file_name)
 	if pic = False:	
