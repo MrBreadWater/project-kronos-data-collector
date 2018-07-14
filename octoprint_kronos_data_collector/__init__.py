@@ -10,7 +10,6 @@ import boto.s3.connection
 from boto.s3.key import Key
 
 class KronosDataCollector(octoprint.plugin.SettingsPlugin,
-                             octoprint.plugin.StartupPlugin,
                              octoprint.plugin.EventHandlerPlugin,
                              octoprint.plugin.TemplatePlugin,
                              octoprint.plugin.RestartNeedingPlugin):
@@ -18,14 +17,11 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
     def on_after_startup(self):
         self._logger.info("Plugin Succesfully running!")
 	def get_settings_defaults(self):
-        return dict(
-                enablePlugin = True
-        )
-
+		return enablePlugin = True
     def get_template_configs(self):
-        return [
-            dict(type='settings', custom_bindings=False, template='fail_data_settings.jinja2')
-        ]
+		return [
+		dict(type='settings', custom_bindings=False, template='fail_data_settings.jinja2')
+			]
 	def get_update_information(self):
         return dict(
             kronos_data_collector=dict(
@@ -45,7 +41,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 		
     @property
     def enablePlugin(self):
-        return self._settings.get_boolean(['enablePlugin'])
+        return self._settings.get_boolean(enablePlugin)
 
     def on_event(self, event, payload):
         from octoprint.events import Events
@@ -128,3 +124,4 @@ __plugin_implementation__ = KronosDataCollector()
 __plugin_hooks__ = {
 	"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
 }
+
