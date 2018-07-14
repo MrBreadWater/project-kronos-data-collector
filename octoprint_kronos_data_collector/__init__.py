@@ -49,7 +49,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         from octoprint.events import Events
         if event == Events.MOVIE_DONE:
                 self.upload_timelapse(payload)
-	if event == Events.PRINT_CANCELLED
+	if event == Events.PRINT_CANCELLED:
        	        self.upload_picture()
     def upload_picture(self):
         if enablePlugin:
