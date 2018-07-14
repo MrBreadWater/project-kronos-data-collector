@@ -15,7 +15,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                              octoprint.plugin.RestartNeedingPlugin):
 
     def get_settings_defaults(self):
-        return dict(enabled=True)
+        return dict(enablePlugin=True)
 
     def get_template_configs(self):
         return [
