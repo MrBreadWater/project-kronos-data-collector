@@ -53,7 +53,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
        	        self.upload_picture()
     def upload_picture(self):
         enablePlugin = self.enablePlugin
-        if enablePlugin():
+        if enablePlugin:
                 random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + 'jpg'
                 urllib.urlretrieve ("http://localhost:8080/?action=snapshot", random_filename)
                 self._logger.info('Uploading image to S3 Sever...')
@@ -61,7 +61,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 os.remove(random_filename)
     def upload_timelapse(self, payload):
         enablePlugin = self.enablePlugin
-        if enablePlugin():
+        if enablePlugin:
                 path = payload['movie']
                 file_name = payload['movie_basename']
                 upload_file(path, file_name, pic = False)
