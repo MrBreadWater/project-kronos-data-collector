@@ -17,7 +17,8 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
     def on_after_startup(self):
         self._logger.info("Plugin Succesfully running!")
 	def get_settings_defaults(self):
-		return enablePlugin = True
+		global enablePlugin
+		enablePlugin = True
     def get_template_configs(self):
 		return [
 		dict(type='settings', custom_bindings=False, template='fail_data_settings.jinja2')
@@ -39,9 +40,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
             )
         )
 		
-    @property
-    def enablePlugin(self):
-        return self._settings.get_boolean(enablePlugin)
+#    @property
+ #   def enablePlugin(self):
+  #      return self._settings.get_boolean()
 
     def on_event(self, event, payload):
         from octoprint.events import Events
@@ -50,14 +51,14 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 		if event == Events.PRINT_CANCELLED
 			self.upload_picture()
 	def upload_picture(self):
-		if enablePlugin():
+		if enablePlugin:
 			random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + 'jpg'
 			urllib.urlretrieve ("http://localhost:8080/?action=snapshot", random_filename)
 			self._logger.info('Uploading image to S3 Sever...')
 			upload_file(random_filename, random_filename, pic = True)
 			os.remove(random_filename)
     def upload_timelapse(self, payload):
-		if enablePlugin():
+		if enablePlugin:
 			path = payload['movie']
 			file_name = payload['movie_basename']
 			upload_file(path, file_name, pic = False)
