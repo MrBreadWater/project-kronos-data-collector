@@ -2,7 +2,7 @@
 from __future__ import absolute_import
 
 import octoprint.plugin
-import urllib2
+import urllib
 import random
 import string
 import boto
@@ -42,42 +42,11 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
             )
         )
 		
-    @property
-    def enablePlugin(self):
-        return self._settings.get_boolean(['enablePlugin'])
-    def on_event(self, event, payload):
-        from octoprint.events import Events
-        if event == Events.MOVIE_DONE:
-                self.upload_timelapse(payload)
-	if event == Events.PRINT_CANCELLED:
-       	        self.upload_picture()
-    def upload_picture(self):
-        enablePlugin = self.enablePlugin
-        if enablePlugin:
-                random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + 'jpg'
-                urllib.urlretrieve ("http://localhost:8080/?action=snapshot", random_filename)
-                self._logger.info('Uploading image to S3 Sever...')
-                upload_file(random_filename, random_filename, pic = True)
-                os.remove(random_filename)
-    def upload_timelapse(self, payload):
-        enablePlugin = self.enablePlugin
-        if enablePlugin:
-                path = payload['movie']
-                file_name = payload['movie_basename']
-                upload_file(path, file_name, pic = False)
+     def upload_file(self, file, filename, pic = True):
 
-			#if delete:
-            #import os
-            #self._logger.info('Deleting %s from local disk...' % file_name)
-            #os.remove(path)
-            #self._logger.info('Deleted %s from local disk.' % file_name)
-
-
-    def upload_file(self, file, filename, pic = True):
-		
-	self._logger.info('Uploading %s to S3 Server...' % file_name)
-	if pic == False:	
-		try:
+        self._logger.info('Uploading %s to S3 Server...' % file_name)
+        if pic == False:	
+                try:
 
                         conn = boto.s3.connect_to_region('us-west-1',
                         aws_access_key_id = 'AKIAJJ4BJOQSV5MGQHIQ',
@@ -118,7 +87,40 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 except Exception as e: 
                         self._logger.info(str(e))
                         self._logger.info("error")
-			
+
+    def upload_picture(self):
+        enablePlugin = self.enablePlugin
+        if enablePlugin:
+                random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + 'jpg'
+                urllib.urlretrieve ("http://localhost:8080/?action=snapshot", random_filename)
+                self._logger.info('Uploading image to S3 Sever...')
+                upload_file(random_filename, random_filename, pic = True)
+                os.remove(random_filename)
+    def upload_timelapse(self, payload):
+        enablePlugin = self.enablePlugin
+        if enablePlugin:
+                path = payload['movie']
+                file_name = payload['movie_basename']
+                upload_file(path, file_name, pic = False)
+    @property
+    def enablePlugin(self):
+        return self._settings.get_boolean(['enablePlugin'])
+    def on_event(self, event, payload):
+        from octoprint.events import Events
+        if event == Events.MOVIE_DONE:
+                self.upload_timelapse(payload)
+	if event == Events.PRINT_CANCELLED:
+       	        self.upload_picture()
+    
+
+			#if delete:
+            #import os
+            #self._logger.info('Deleting %s from local disk...' % file_name)
+            #os.remove(path)
+            #self._logger.info('Deleted %s from local disk.' % file_name)
+
+
+
 __plugin_name__ = "Kronos Data Collector"
 
 
