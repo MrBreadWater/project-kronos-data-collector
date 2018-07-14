@@ -48,9 +48,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
     def on_event(self, event, payload):
         from octoprint.events import Events
         if event == Events.MOVIE_DONE:
-            self.upload_timelapse(payload)
-		if event == Events.PRINT_CANCELLED
-			self.upload_picture()
+                self.upload_timelapse(payload)
+	if event == Events.PRINT_CANCELLED
+       	        self.upload_picture()
     def upload_picture(self):
         if enablePlugin:
                 random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + 'jpg'
