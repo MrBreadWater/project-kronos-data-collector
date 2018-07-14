@@ -16,13 +16,14 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 
     def on_after_startup(self):
         self._logger.info("Plugin Succesfully running!")
-	def get_settings_defaults(self):
-		global enablePlugin
-		enablePlugin = True
+    def get_settings_defaults(self):
+                return dict(
+                    enablePlugin=True
+                )
     def get_template_configs(self):
-		return [
-		dict(type='settings', custom_bindings=False, template='fail_data_settings.jinja2')
-		]
+                return [
+                dict(type='settings', custom_bindings=False, template='fail_data_settings.jinja2')
+                ]
 
     def get_update_information(self):
         return dict(
@@ -41,10 +42,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
             )
         )
 		
-#    @property
- #   def enablePlugin(self):
-  #      return self._settings.get_boolean()
-
+    @property
+    def enablePlugin(self):
+        return self._settings.get_boolean(['enablePlugin'])
     def on_event(self, event, payload):
         from octoprint.events import Events
         if event == Events.MOVIE_DONE:
@@ -121,8 +121,18 @@ __plugin_name__ = "Kronos Data Collector"
 
 
 
-__plugin_implementation__ = KronosDataCollector()
+#__plugin_implementation__ = KronosDataCollector()
 
-__plugin_hooks__ = {
-	"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
-}
+#__plugin_hooks__ = {
+#	"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+#}
+
+def __plugin_load__():
+    global __plugin_implementation__
+    __plugin_implementation__ = KronosDataCollector()
+
+    global __plugin_hooks__
+    __plugin_hooks__ = {
+        "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+    }
+
