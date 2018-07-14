@@ -74,7 +74,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
     def upload_file(self, file, filename, pic = True):
 		
 	self._logger.info('Uploading %s to S3 Server...' % file_name)
-	if pic = False:	
+	if pic == False:	
 		try:
 
                         conn = boto.s3.connect_to_region('us-west-1',
@@ -95,7 +95,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 except Exception as e: 
                         self._logger.info(str(e))
                         self._logger.info("error")
-        elif pic = True:
+        elif pic == True:
                 try:
 
                         conn = boto.s3.connect_to_region('us-west-1',
