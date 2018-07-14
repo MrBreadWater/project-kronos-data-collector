@@ -10,6 +10,7 @@ import boto.s3.connection
 from boto.s3.key import Key
 
 class KronosDataCollector(octoprint.plugin.SettingsPlugin,
+                             octoprint.plugin.StartupPlugin,
                              octoprint.plugin.EventHandlerPlugin,
                              octoprint.plugin.TemplatePlugin,
                              octoprint.plugin.RestartNeedingPlugin):
