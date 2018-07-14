@@ -130,7 +130,7 @@ __plugin_name__ = "Kronos Data Collector"
 
 def __plugin_load__():
     global __plugin_implementation__
-	__plugin_implementation__ = KronosDataCollector()
+    __plugin_implementation__ = KronosDataCollector()
 
     global __plugin_hooks__
     __plugin_hooks__ = {
