@@ -22,7 +22,8 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
     def get_template_configs(self):
 		return [
 		dict(type='settings', custom_bindings=False, template='fail_data_settings.jinja2')
-			]
+		]
+
 	def get_update_information(self):
         return dict(
             kronos_data_collector=dict(
