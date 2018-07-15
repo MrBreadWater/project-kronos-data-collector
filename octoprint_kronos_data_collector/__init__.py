@@ -62,7 +62,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                         full_key_name = os.path.join(UpPath, key_name)
                         k = bucket.new_key(full_key_name)
                         k.set_contents_from_filename(file)
-                        self._logger.info('Uploaded %s to S3 Server!' % file_name)
+                        self._logger.info('Uploaded timelapse to S3 Server!')
                 except Exception as e: 
                         self._logger.info(str(e))
                         self._logger.info("error")
@@ -83,7 +83,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                         full_key_name = os.path.join(UpPath, key_name)
                         k = bucket.new_key(full_key_name)
                         k.set_contents_from_filename(key_name)
-                        self._logger.info('Uploaded %s to S3 Server!' % file_name)
+                        self._logger.info('Uploaded photo to S3 Server!')
                 except Exception as e: 
                         self._logger.info(str(e))
                         self._logger.info("error")
