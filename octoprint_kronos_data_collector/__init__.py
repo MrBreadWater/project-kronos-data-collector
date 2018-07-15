@@ -8,6 +8,7 @@ import string
 import boto
 import boto.s3.connection
 from boto.s3.key import Key
+import os
 
 class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                              octoprint.plugin.EventHandlerPlugin,
