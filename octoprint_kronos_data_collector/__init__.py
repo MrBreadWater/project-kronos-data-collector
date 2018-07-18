@@ -57,7 +57,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                         )
 
                         bucket = conn.get_bucket('3dprintdetectionuploads')
-                        key_name = filename + '.mpg'
+                        key_name = filename
                         UpPath = 'prints/' #Directory Under which file should get upload
                         full_key_name = os.path.join(UpPath, key_name)
                         k = bucket.new_key(full_key_name)
@@ -78,7 +78,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                         )
 
                         bucket = conn.get_bucket('3dprintdetectionuploads')
-                        key_name = filename + '.jpg'
+                        key_name = filename
                         UpPath = 'print_pics/' #Directory Under which file should get upload
                         full_key_name = os.path.join(UpPath, key_name)
                         k = bucket.new_key(full_key_name)
@@ -91,8 +91,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
     def upload_picture(self):
         enablePlugin = self.enablePlugin
         if enablePlugin:
+                snapshot_url = self._settings.global_get(["webcam", "snapshot"])
                 random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + 'jpg'
-                urllib.urlretrieve ("http://localhost:8080/?action=snapshot", random_filename)
+                urllib.urlretrieve (snapshot_url, random_filename)
                 self._logger.info('Uploading image to S3 Sever...')
                 self.upload_file(random_filename, random_filename, pic = True)
                 os.remove(random_filename)
