@@ -53,8 +53,8 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 try:
 
                         conn = boto.s3.connect_to_region('us-west-1',
-                        aws_access_key_id = 'AKIAJJ4BJOQSV5MGQHIQ',
-                        aws_secret_access_key = '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',
+                        aws_access_key_id = 'AKIAI7H2NC5NFBUBZLJA',
+                        aws_secret_access_key = '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',
                         # host = 's3-website-us-east-1.amazonaws.com',
                         # is_secure=True,               # uncomment if you are not using ssl
                         calling_format = boto.s3.connection.OrdinaryCallingFormat(),
