@@ -5,9 +5,9 @@ import octoprint.plugin
 import urllib
 import random
 import string
-import boto
-import boto.s3.connection
-from boto.s3.key import Key
+import boto3
+from botocore import UNSIGNED
+from botocore.client import Config
 import os
 
 class KronosDataCollector(octoprint.plugin.SettingsPlugin,
@@ -51,21 +51,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         self._logger.info('Uploading to S3 Server...')
         if pic == False:	
                 try:
-
-                        conn = boto.s3.connect_to_region('us-west-1',
-                        aws_access_key_id = 'AKIAI7H2NC5NFBUBZLJA',
-                        aws_secret_access_key = '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',
-                        # host = 's3-website-us-east-1.amazonaws.com',
-                        # is_secure=True,               # uncomment if you are not using ssl
-                        calling_format = boto.s3.connection.OrdinaryCallingFormat(),
-                        )
-
-                        bucket = conn.get_bucket('3dprintdetectionuploads')
-                        key_name = filename
-                        UpPath = 'prints/' #Directory Under which file should get upload
-                        full_key_name = os.path.join(UpPath, key_name)
-                        k = bucket.new_key(full_key_name)
-                        k.set_contents_from_filename(file)
+                        s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
+                        bucket_name = '3dprintdetectionuploads'
+                        s3.upload_file(filename, bucket_name, 'prints/' + filename)
                         self._logger.info('Uploaded timelapse to S3 Server!')
                 except Exception as e: 
                         self._logger.info(str(e))
@@ -73,20 +61,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         elif pic == True:
                 try:
 
-                        conn = boto.s3.connect_to_region('us-west-1',
-                        aws_access_key_id = 'AKIAJJ4BJOQSV5MGQHIQ',
-                        aws_secret_access_key = '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',
-                        # host = 's3-website-us-east-1.amazonaws.com',
-                        # is_secure=True,               # uncomment if you are not using ssl
-                        calling_format = boto.s3.connection.OrdinaryCallingFormat(),
-                        )
-
-                        bucket = conn.get_bucket('3dprintdetectionuploads')
-                        key_name = filename
-                        UpPath = 'print_pics/' #Directory Under which file should get upload
-                        full_key_name = os.path.join(UpPath, key_name)
-                        k = bucket.new_key(full_key_name)
-                        k.set_contents_from_filename(key_name)
+                        s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
+                        bucket_name = '3dprintdetectionuploads'
+                        s3.upload_file(filename, bucket_name, 'print_pics/' + filename)
                         self._logger.info('Uploaded photo to S3 Server!')
                 except Exception as e: 
                         self._logger.info(str(e))
@@ -96,7 +73,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         enablePlugin = self.enablePlugin
         if enablePlugin:
                 snapshot_url = self._settings.global_get(["webcam", "snapshot"])
-                random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + 'jpg'
+                random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + '.jpg'
                 urllib.urlretrieve (snapshot_url, random_filename)
                 self._logger.info('Uploading image to S3 Sever...')
                 self.upload_file(random_filename, random_filename, pic = True)
