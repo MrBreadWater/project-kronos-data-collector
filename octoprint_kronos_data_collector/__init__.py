@@ -53,7 +53,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 try:
                         s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
                         bucket_name = '3dprintdetectionuploads'
-                        s3.upload_file(filename, bucket_name, 'prints/' + filename)
+                        s3.upload_file(file, bucket_name, 'prints/' + filename)
                         self._logger.info('Uploaded timelapse to S3 Server!')
                 except Exception as e: 
                         self._logger.info(str(e))
@@ -63,7 +63,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 
                         s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
                         bucket_name = '3dprintdetectionuploads'
-                        s3.upload_file(filename, bucket_name, 'print_pics/' + filename)
+                        s3.upload_file(file, bucket_name, 'print_pics/' + filename)
                         self._logger.info('Uploaded photo to S3 Server!')
                 except Exception as e: 
                         self._logger.info(str(e))
