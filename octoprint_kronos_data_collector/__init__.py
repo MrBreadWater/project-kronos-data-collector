@@ -6,9 +6,9 @@ import urllib
 import random
 import string
 import boto3
-from botocore import UNSIGNED
 from botocore.client import Config
 import os
+import base64
 
 class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                              octoprint.plugin.EventHandlerPlugin,
@@ -46,26 +46,29 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 pip="https://github.com/MrBreadWater/project-kronos-data-collector/archive/{target_version}.zip"
             )
         )
-		
+
     def upload_file(self, file, filename, pic = True):
         self._logger.info('Uploading to S3 Server...')
-        if pic == False:	
+        if pic == False:
                 try:
-                        s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
+                        scram_a = 'QUtJQUk0UFlVRVVNVFJCTVRNT1E='
+                        scram_s = 'YzBTQW9uL3YvZWNnb1hOV2NObGllMVY2YXdXSCtiZVo4M20rRzlzdQ=='
+                        s3 = boto3.client('s3', aws_access_key_id=base64.b64decode(scram_a), aws_secret_access_key=base64.b64decode(scram_s))
                         bucket_name = '3dprintdetectionuploads'
                         s3.upload_file(file, bucket_name, 'prints/' + filename)
                         self._logger.info('Uploaded timelapse to S3 Server!')
-                except Exception as e: 
+                except Exception as e:
                         self._logger.info(str(e))
                         self._logger.info("error")
         elif pic == True:
                 try:
-
-                        s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
+                        scram_a = 'QUtJQUk0UFlVRVVNVFJCTVRNT1E='
+                        scram_s = 'YzBTQW9uL3YvZWNnb1hOV2NObGllMVY2YXdXSCtiZVo4M20rRzlzdQ=='
+                        s3 = boto3.client('s3', aws_access_key_id=base64.b64decode(scram_a), aws_secret_access_key=base64.b64decode(scram_s))
                         bucket_name = '3dprintdetectionuploads'
                         s3.upload_file(file, bucket_name, 'print_pics/' + filename)
                         self._logger.info('Uploaded photo to S3 Server!')
-                except Exception as e: 
+                except Exception as e:
                         self._logger.info(str(e))
                         self._logger.info("error")
 
@@ -91,9 +94,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         from octoprint.events import Events
         if event == Events.MOVIE_DONE:
                 self.upload_timelapse(payload)
-	if event == Events.PRINT_CANCELLED:
+	if event == Events.PRINT_CANCELED:
        	        self.upload_picture()
-    
+
 
 			#if delete:
             #import os
