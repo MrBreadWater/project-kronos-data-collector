@@ -1,5 +1,5 @@
 # project-kronos-data-collector
-Simple Octoprint Plugin to collect a dataset for Project Kronos: https://github.com/MrBreadWater/project-kronos
+Simple Octoprint Plugin to collect a Neural Network dataset of 3D Printing timelapses.
 
 # Install
 Project Kronos Data Collector is pending acceptance into the official Octoprint Plugin Repository. Until then, install like so:
