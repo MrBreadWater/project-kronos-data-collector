@@ -2,7 +2,8 @@
 <h4>Kronos Data Collector</h4>
 
 <h1>What it is</h1>
-<p>Kronos Data Collector will automatically upload photos <b>and timelapses</b> (assuming you have timelapses enabled) of your prints to the Project Kronos servers to aid in the collection of a dataset. Project Kronos is an effort to create a webcam-based Neural Network to classify snapshots from a 3D Printer as "Failed" or "Successful". This will be implemented in real-time as an Octoprint plugin to automatically pause the printer and alert the user of the potential error, leading to far less wasted filament and a lower chance of printer damage. For more information on Project Kronos, please visit: https://github.com/MrBreadWater/project-kronos</p>
+<p>Kronos Data Collector will automatically upload photos <b>and timelapses</b> (assuming you have timelapses enabled) of your prints to the Project Kronos servers to aid in the collection of a dataset. </p>
+<p>Project Kronos is an effort to create a webcam-based Neural Network to classify snapshots from a 3D Printer as "Failed" or "Successful". This will be implemented in real-time as an Octoprint plugin to automatically pause the printer and alert the user of the potential error, leading to far less wasted filament and a lower chance of printer damage. For more information on Project Kronos, please visit: https://github.com/MrBreadWater/project-kronos</p>
 <br>
 <h1>Instructions</h1>
 
@@ -12,4 +13,6 @@
         <label for="enablePlugin"><strong>Enable Plugin?</strong></label>
         <input class="input-checkbox" type="checkbox" id="enablePlugin" data-bind="checked: settings.plugins.kronos_data_collector.enablePlugin">
     </p>
+    <p> <strong>NOTE: </strong> by enabling this plugin, you agree to the anonymous collection of any timelapses rendered while you keep the plugin enabled. </p>
+    <p> No identifying information about you will be attatched to these files. 
 </form>
