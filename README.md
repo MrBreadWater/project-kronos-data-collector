@@ -1,5 +1,5 @@
 # Project Kronos Data Collector
-A simple Octoprint Plugin to help collect a Neural Network dataset of 3D Printing timelapses.
+A simple Octoprint Plugin to help collect a Neural Network dataset of 3D Printing timelapses for Project Kronos. Project Kronos is an effort to create a webcam-based Neural Network to classify snapshots from a 3D Printer as "Failed" or "Successful". This will be implemented in real-time as an Octoprint plugin to automatically pause the printer and alert the user of the potential error, leading to far less wasted filament and a lower chance of printer damage.
 
 # Install
 Project Kronos Data Collector is pending acceptance into the official Octoprint Plugin Repository. Until then, install like so:
