@@ -18,7 +18,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
     def is_wizard_required(self):
         return True
     def get_wizard_version(self):
-        return 2.1
+        return 2.2
     def on_after_startup(self):
         self._logger.info("Plugin Succesfully running!")
     def get_settings_defaults(self):
