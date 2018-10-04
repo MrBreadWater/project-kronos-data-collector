@@ -32,7 +32,7 @@ To disable this plugin, go into your Octoprint settings, and on the side, click 
 
 To uninstall this plugin completely, go to your Octoprint settings and click on Plugin Manager. Simply find the plugin in the list of installed plugins, and click on the trash can to uninstall it. Follow any prompts that pop up.
 
-#Contact Me
+# Contact Me
 
 Email: jpaniagua1541@gmail.com
 Reddit: MrBreadWater
