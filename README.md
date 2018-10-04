@@ -35,8 +35,11 @@ To uninstall this plugin completely, go to your Octoprint settings and click on 
 # Contact Me
 
 Email: jpaniagua1541@gmail.com
+
 Reddit: MrBreadWater
+
 Discord: MrBreadWater#4998
 
+&nbsp;
 
 A quick note on intellectual property. The technology behind Project Kronos is now patent pending, and should not be duplicated without express permission from myself. The Data Collector itself is open source, and may be modified without my permission. However, the system of processing via neural networks I've described as "Proejct Kronos" is patent pending. I may make some or all of the finished project open source, however I am still considering what actions I want to take in that regaurd.
