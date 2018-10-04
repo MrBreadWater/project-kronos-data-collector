@@ -31,3 +31,12 @@ The data is hand-sorted into a dataset, and used to generate a neural network. N
 To disable this plugin, go into your Octoprint settings, and on the side, click Project Kronos Daa Collector. Then, simply uncheck the "Enable?" checkbox and save your settings. 
 
 To uninstall this plugin completely, go to your Octoprint settings and click on Plugin Manager. Simply find the plugin in the list of installed plugins, and click on the trash can to uninstall it. Follow any prompts that pop up.
+
+#Contact Me
+
+Email: jpaniagua1541@gmail.com
+Reddit: MrBreadWater
+Discord: MrBreadWater#4998
+
+
+A quick note on intellectual property. The technology behind Project Kronos is now patent pending, and should not be duplicated without express permission from myself. The Data Collector itself is open source, and may be modified without my permission. However, the system of processing via neural networks I've described as "Proejct Kronos" is patent pending. I may make some or all of the finished project open source, however I am still considering what actions I want to take in that regaurd.
