@@ -86,7 +86,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         if enablePlugin:
                 path = payload['movie']
                 file_name = payload['movie_basename']
-                self.upload_file(path, file_name, pic = False)
+                if os.path.getsize(path) > 1500000: #if file size > 1.5 MB, control the influx of extremely small timelapses.
+                    self.upload_file(path, file_name, pic = False)
+
     @property
     def enablePlugin(self):
         return self._settings.get_boolean(['enablePlugin'])
@@ -95,10 +97,10 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         if event == Events.MOVIE_DONE:
                 self.upload_timelapse(payload)
         if event == Events.PRINT_CANCELLED:
-       	        self.upload_picture()
+                self.upload_picture()
 
 
-			#if delete:
+            #if delete:
             #import os
             #self._logger.info('Deleting %s from local disk...' % file_name)
             #os.remove(path)
