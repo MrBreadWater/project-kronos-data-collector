@@ -7,8 +7,9 @@ Project Kronos Data Collector is in the Official Octoprint Plugin Repository, an
 Alternatively, install by going to Octoprint's plugin manager, clicking the "Get More" button at the bottom of the screen, and paste the following URL into it: https://github.com/MrBreadWater/project-kronos-data-collector/archive/master.zip
 
 Simply follow the on screen directions from that point to finish the install.
-
-Once it is accepted, the plugin will be installable using the built in Plugin Manager.
+# Upcoming Features
+### 1. Usage incentive
+The usage incentive will add a sign up form to the program to allow users to register themselves onto a list of contributors. The contributors will recieve an incentive (yet to be determined) at the end of the data collection period.
 <br>
 # Privacy Statement
 
