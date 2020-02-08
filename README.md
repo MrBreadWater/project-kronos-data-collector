@@ -35,7 +35,7 @@ To uninstall this plugin completely, go to your Octoprint settings and click on 
 
 # Contact Me
 
-Email: jpaniagua1541@gmail.com
+Email: mrbreadwater@yahoo.com
 
 Reddit: MrBreadWater
 
