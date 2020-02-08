@@ -49,28 +49,13 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 
     def upload_file(self, file, filename, pic = True):
         self._logger.info('Uploading to S3 Server...')
-        if pic == False:
-                try:
-                        scram_a = 'QUtJQUk0UFlVRVVNVFJCTVRNT1E='
-                        scram_s = 'YzBTQW9uL3YvZWNnb1hOV2NObGllMVY2YXdXSCtiZVo4M20rRzlzdQ=='
-                        s3 = boto3.client('s3', aws_access_key_id=base64.b64decode(scram_a), aws_secret_access_key=base64.b64decode(scram_s))
-                        bucket_name = '3dprintdetectionuploads'
-                        s3.upload_file(file, bucket_name, 'prints/' + filename)
-                        self._logger.info('Uploaded timelapse to S3 Server!')
-                except Exception as e:
-                        self._logger.info(str(e))
-                        self._logger.info("error")
-        elif pic == True:
-                try:
-                        scram_a = 'QUtJQUk0UFlVRVVNVFJCTVRNT1E='
-                        scram_s = 'YzBTQW9uL3YvZWNnb1hOV2NObGllMVY2YXdXSCtiZVo4M20rRzlzdQ=='
-                        s3 = boto3.client('s3', aws_access_key_id=base64.b64decode(scram_a), aws_secret_access_key=base64.b64decode(scram_s))
-                        bucket_name = '3dprintdetectionuploads'
-                        s3.upload_file(file, bucket_name, 'print_pics/' + filename)
-                        self._logger.info('Uploaded photo to S3 Server!')
-                except Exception as e:
-                        self._logger.info(str(e))
-                        self._logger.info("error")
+        try:
+                scram_a = 'QUtJQVFNM0hJUkE2SDNPUDVQUjM='
+                scram_s = 'aGsybVFET2JuaFhyR29PV3pLQ2NYTDBwdnNXM01qVmRBSW45QytDaQ=='
+                s3 = boto3.client('s3', aws_access_key_id=base64.b64decode(scram_a), aws_secret_access_key=base64.b64decode(scram_s))
+                bucket_name = 'kronos-plugin-uploads'
+                s3.upload_file(file, bucket_name, '%s' % ('print_pics/' if pic else 'prints/') + filename)
+                self._logger.info('Uploaded %s to S3 Server!' % ("photo" if pic else "timelapse"))                        
 
     def upload_picture(self):
         enablePlugin = self.enablePlugin
