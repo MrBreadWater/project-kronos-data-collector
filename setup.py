@@ -14,23 +14,23 @@ plugin_package = "octoprint_kronos_data_collector"
 plugin_name = "Kronos Data Collector"
 
 # The plugin's version. Can be overwritten within OctoPrint's internal data via __plugin_version__ in the plugin module
-plugin_version = "1.2.4"
+plugin_version = "1.3.0"
 
 # The plugin's description. Can be overwritten within OctoPrint's internal data via __plugin_description__ in the plugin
 # module
 plugin_description = """On canceling or rendering a timelapse, the plugin will automatically upload an image or timelapse to help Project Kronos (visual neural network based automatic print failure detection)"""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
-plugin_author = "Jacob Paniagua"
+plugin_author = "Michael Paniagua"
 
 # The plugin's author's mail address.
-plugin_author_email = "jpaniaguua1541@gmail.com"
+plugin_author_email = "mrbreadwater@yahoo.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
 plugin_url = "https://github.com/MrBreadWater/project-kronos-data-collector"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
-plugin_license = "AGPLv3"
+plugin_license = "CC BY-NC"
 
 # Any additional requirements besides OctoPrint should be listed here
 plugin_requires = ['boto3']
