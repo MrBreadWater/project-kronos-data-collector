@@ -52,7 +52,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         try:
                 scram_a = 'QUtJQVFNM0hJUkE2SDNPUDVQUjM='
                 scram_s = 'aGsybVFET2JuaFhyR29PV3pLQ2NYTDBwdnNXM01qVmRBSW45QytDaQ=='
-                s3 = boto3.client('s3', aws_access_key_id=base64.b64decode(scram_a), aws_secret_access_key=base64.b64decode(scram_s))
+                s3 = boto3.client('s3', aws_access_key_id=base64.b64decode(scram_a).decode(), aws_secret_access_key=base64.b64decode(scram_s).decode())
                 bucket_name = 'kronos-plugin-uploads'
                 s3.upload_file(file, bucket_name, '%s' % ('print_pics/' if pic else 'prints/') + filename)
                 self._logger.info('Uploaded %s to S3 Server!' % ("photo" if pic else "timelapse"))                        
@@ -95,6 +95,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 
 __plugin_name__ = "Kronos Data Collector"
 
+__plugin_pythoncompat__ = ">=3,<4"  # only python 3
 
 
 #__plugin_implementation__ = KronosDataCollector()
