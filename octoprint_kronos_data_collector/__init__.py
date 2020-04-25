@@ -4,9 +4,9 @@ from __future__ import (division, print_function, absolute_import,
                         unicode_literals)
 
 import octoprint.plugin
-import urllib.request
 import random
 import string
+import urllib
 import boto3
 import os
 import base64
@@ -16,8 +16,13 @@ try:
 except:
     pass
 import sys
+
 if sys.version_info.major > 2:
+    import urllib.request
+    urlrequest = urllib.request.urlretrieve
     xrange = range
+else:
+    urlrequest = urllib.urlretrieve
 
 class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                              octoprint.plugin.EventHandlerPlugin,
@@ -72,7 +77,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         if enablePlugin:
                 snapshot_url = self._settings.global_get(["webcam", "snapshot"])
                 random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + '.jpg'
-                urllib.request.urlretrieve (snapshot_url, filename=random_filename)
+                urlrequest(snapshot_url, filename=random_filename)
                 self._logger.info('Uploading image to S3 Sever...')
                 self.upload_file(random_filename, random_filename, pic = True)
                 os.remove(random_filename)
