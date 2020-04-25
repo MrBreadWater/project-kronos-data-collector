@@ -1,14 +1,23 @@
 # coding=utf-8
 from __future__ import absolute_import
+from __future__ import (division, print_function, absolute_import,
+                        unicode_literals)
 
 import octoprint.plugin
-import urllib
+import urllib.request
 import random
 import string
 import boto3
-from botocore.client import Config
 import os
 import base64
+from builtins import int
+try:
+    from future_builtins import ascii, filter, hex, map, oct, zip
+except:
+    pass
+import sys
+if sys.version_info.major > 2:
+    xrange = range
 
 class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                              octoprint.plugin.EventHandlerPlugin,
@@ -52,17 +61,18 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         try:
                 scram_a = 'QUtJQVFNM0hJUkE2SDNPUDVQUjM='
                 scram_s = 'aGsybVFET2JuaFhyR29PV3pLQ2NYTDBwdnNXM01qVmRBSW45QytDaQ=='
-                s3 = boto3.client('s3', aws_access_key_id=base64.b64decode(scram_a).decode(), aws_secret_access_key=base64.b64decode(scram_s).decode())
+                s3 = boto3.client('s3', aws_access_key_id=str(base64.b64decode(scram_a).decode()), aws_secret_access_key=str(base64.b64decode(scram_s).decode()))
                 bucket_name = 'kronos-plugin-uploads'
                 s3.upload_file(file, bucket_name, '%s' % ('print_pics/' if pic else 'prints/') + filename)
-                self._logger.info('Uploaded %s to S3 Server!' % ("photo" if pic else "timelapse"))                        
-
+                self._logger.info('Uploaded %s to S3 Server!' % ("photo" if pic else "timelapse"))
+        except Exception as e:
+                self._logger.warn("Could not upload: %s" % e)
     def upload_picture(self):
         enablePlugin = self.enablePlugin
         if enablePlugin:
                 snapshot_url = self._settings.global_get(["webcam", "snapshot"])
                 random_filename = str(''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + '.jpg'
-                urllib.urlretrieve (snapshot_url, random_filename)
+                urllib.request.urlretrieve (snapshot_url, filename=random_filename)
                 self._logger.info('Uploading image to S3 Sever...')
                 self.upload_file(random_filename, random_filename, pic = True)
                 os.remove(random_filename)
@@ -94,9 +104,6 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 
 
 __plugin_name__ = "Kronos Data Collector"
-
-__plugin_pythoncompat__ = ">=3,<4"  # only python 3
-
 
 #__plugin_implementation__ = KronosDataCollector()
 
