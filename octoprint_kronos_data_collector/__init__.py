@@ -25,10 +25,9 @@ else:
     urlrequest = urllib.urlretrieve
 
 class KronosDataCollector(octoprint.plugin.SettingsPlugin,
-                             octoprint.plugin.EventHandlerPlugin,
                           	 octoprint.plugin.AssetPlugin,
+                             octoprint.plugin.EventHandlerPlugin,
                              octoprint.plugin.TemplatePlugin,
-                             octoprint.plugin.RestartNeedingPlugin,
                              octoprint.plugin.WizardPlugin):
     def is_wizard_required(self):
         return True
