@@ -26,6 +26,7 @@ else:
 
 class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                              octoprint.plugin.EventHandlerPlugin,
+                          	 octoprint.plugin.AssetPlugin,
                              octoprint.plugin.TemplatePlugin,
                              octoprint.plugin.RestartNeedingPlugin,
                              octoprint.plugin.WizardPlugin):
@@ -37,11 +38,11 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         self._logger.info("Plugin Succesfully running!")
     def get_settings_defaults(self):
                 return dict(
-                    enablePlugin=False
+                    enablePlugin=True
                 )
     def get_template_configs(self):
                 return [
-                  dict(type='settings', custom_bindings=False, template='kronos_data_collector_wizard.jinja2')
+                  dict(type='settings', custom_bindings=True, template='kronos_data_collector_wizard.jinja2')
                 ]
 
     def get_update_information(self):
@@ -59,6 +60,10 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 # update method: pip
                 pip="https://github.com/MrBreadWater/project-kronos-data-collector/archive/{target_version}.zip"
             )
+        )
+     def get_assets(self):
+        return dict(
+          js=["js/kronos.js"]
         )
 
     def upload_file(self, file, filename, pic = True):
