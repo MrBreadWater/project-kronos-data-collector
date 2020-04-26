@@ -61,9 +61,10 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 pip="https://github.com/MrBreadWater/project-kronos-data-collector/archive/{target_version}.zip"
             )
         )
-     def get_assets(self):
+    
+    def get_assets(self):
         return dict(
-          js=["js/kronos.js"]
+            js=["js/kronos.js"]
         )
 
     def upload_file(self, file, filename, pic = True):
