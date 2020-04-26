@@ -109,7 +109,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 
 
 __plugin_name__ = "Kronos Data Collector"
-
+lugin_pythoncompat__ = ">=2.7,<4" 
 #__plugin_implementation__ = KronosDataCollector()
 
 #__plugin_hooks__ = {
