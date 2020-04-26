@@ -110,17 +110,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 
 __plugin_name__ = "Kronos Data Collector"
 __plugin_pythoncompat__ = ">=2.7,<4" 
-#__plugin_implementation__ = KronosDataCollector()
 
-#__plugin_hooks__ = {
-#	"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
-#}
+__plugin_implementation__ = KronosDataCollector()
 
-def __plugin_load__():
-    global __plugin_implementation__
-    __plugin_implementation__ = KronosDataCollector()
-
-    global __plugin_hooks__
-    __plugin_hooks__ = {
-        "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
-    }
+__plugin_hooks__ = {
+    "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+}
