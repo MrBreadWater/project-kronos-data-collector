@@ -11,6 +11,7 @@ import boto3
 import os
 import base64
 from builtins import int
+
 try:
     from future_builtins import ascii, filter, hex, map, oct, zip
 except:
@@ -19,30 +20,36 @@ import sys
 
 if sys.version_info.major > 2:
     import urllib.request
+
     urlrequest = urllib.request.urlretrieve
     xrange = range
 else:
     urlrequest = urllib.urlretrieve
 
+
 class KronosDataCollector(octoprint.plugin.SettingsPlugin,
-                          	 octoprint.plugin.AssetPlugin,
-                             octoprint.plugin.EventHandlerPlugin,
-                             octoprint.plugin.TemplatePlugin,
-                             octoprint.plugin.WizardPlugin):
+                          octoprint.plugin.AssetPlugin,
+                          octoprint.plugin.EventHandlerPlugin,
+                          octoprint.plugin.TemplatePlugin,
+                          octoprint.plugin.WizardPlugin):
     def is_wizard_required(self):
         return True
+
     def get_wizard_version(self):
         return 2.3
+
     def on_after_startup(self):
         self._logger.info("Plugin Succesfully running!")
+
     def get_settings_defaults(self):
-                return dict(
-                    enablePlugin=True
-                )
+        return dict(
+            enablePlugin=True
+        )
+
     def get_template_configs(self):
-                return [
-                  dict(type='settings', custom_bindings=True, template='kronos_data_collector_wizard.jinja2')
-                ]
+        return [
+            dict(type='settings', custom_bindings=True, template='kronos_data_collector_wizard.jinja2')
+        ]
 
     def get_update_information(self):
         return dict(
@@ -60,64 +67,70 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 pip="https://github.com/MrBreadWater/project-kronos-data-collector/archive/{target_version}.zip"
             )
         )
-    
+
     def get_assets(self):
         return dict(
             js=["js/kronos.js"]
         )
 
-    def upload_file(self, file, filename, pic = True):
+    def upload_file(self, file, filename, pic=True):
         self._logger.info('Uploading to S3 Server...')
         try:
-                scram_a = 'QUtJQVFNM0hJUkE2SDNPUDVQUjM='
-                scram_s = 'aGsybVFET2JuaFhyR29PV3pLQ2NYTDBwdnNXM01qVmRBSW45QytDaQ=='
-                s3 = boto3.client('s3', aws_access_key_id=str(base64.b64decode(scram_a).decode()), aws_secret_access_key=str(base64.b64decode(scram_s).decode()))
-                bucket_name = 'kronos-plugin-uploads'
-                s3.upload_file(file, bucket_name, '%s' % ('print_pics/' if pic else 'prints/' + filename.split('/')[-1])
-                self._logger.info('Uploaded %s to S3 Server!' % ("photo" if pic else "timelapse"))
+            scram_a = 'QUtJQVFNM0hJUkE2SDNPUDVQUjM='
+            scram_s = 'aGsybVFET2JuaFhyR29PV3pLQ2NYTDBwdnNXM01qVmRBSW45QytDaQ=='
+            s3 = boto3.client('s3', aws_access_key_id=str(base64.b64decode(scram_a).decode()),
+                              aws_secret_access_key=str(base64.b64decode(scram_s).decode()))
+            bucket_name = 'kronos-plugin-uploads'
+            s3.upload_file(file, bucket_name, '%s' % ('print_pics/' if pic else 'prints/' + filename.split('/')[-1])
+            self._logger.info('Uploaded %s to S3 Server!' % ("photo" if pic else "timelapse"))
         except Exception as e:
-                self._logger.warn("Could not upload: %s" % e)
+            self._logger.warn("Could not upload: %s" % e)
+
     def upload_picture(self):
         enablePlugin = self.enablePlugin
         if enablePlugin:
             try:
                 snapshot_url = self._settings.global_get(["webcam", "snapshot"])
-                random_filename = str('/tmp/'+''.join([random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + '.jpg'
+                random_filename = str('/tmp/' + ''.join(
+                    [random.choice(string.ascii_letters + string.digits) for n in xrange(32)])) + '.jpg'
                 urlrequest(snapshot_url, filename=random_filename)
                 self._logger.info('Uploading image to S3 Sever...')
-                self.upload_file(random_filename, random_filename, pic = True)
+                self.upload_file(random_filename, random_filename, pic=True)
                 os.remove(random_filename)
             except Exception as e:
                 self._logger.warn("Could not upload: %s" % e)
+
     def upload_timelapse(self, payload):
         enablePlugin = self.enablePlugin
-        if enablePlugin:
+        try:
+            if enablePlugin:
                 path = payload['movie']
                 file_name = payload['movie_basename']
-                if os.path.getsize(path) > 0: #if file size > 0 MB
-                    self.upload_file(path, file_name, pic = False)
+                if os.path.getsize(path) > 0:  # if file size > 0 MB
+                    self.upload_file(path, file_name, pic=False)
+        except Exception as e:
+            self._logger.warn("Could not upload: %s" % e)
 
     @property
     def enablePlugin(self):
         return self._settings.get_boolean(['enablePlugin'])
+
     def on_event(self, event, payload):
         from octoprint.events import Events
         if event == Events.MOVIE_DONE:
-                self.upload_timelapse(payload)
+            self.upload_timelapse(payload)
         if event == Events.PRINT_CANCELLED:
-                self.upload_picture()
+            self.upload_picture()
 
-
-            #if delete:
-            #import os
-            #self._logger.info('Deleting %s from local disk...' % file_name)
-            #os.remove(path)
-            #self._logger.info('Deleted %s from local disk.' % file_name)
-
+        # if delete:
+        # import os
+        # self._logger.info('Deleting %s from local disk...' % file_name)
+        # os.remove(path)
+        # self._logger.info('Deleted %s from local disk.' % file_name)
 
 
 __plugin_name__ = "Kronos Data Collector"
-__plugin_pythoncompat__ = ">=2.7,<4" 
+__plugin_pythoncompat__ = ">=2.7,<4"
 
 __plugin_implementation__ = KronosDataCollector()
 
