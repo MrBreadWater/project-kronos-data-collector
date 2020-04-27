@@ -4,6 +4,7 @@ from __future__ import (division, print_function, absolute_import,
                         unicode_literals)
 
 import octoprint.plugin
+from octoprint.events import Events
 import random
 import string
 import urllib
@@ -81,7 +82,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
             s3 = boto3.client('s3', aws_access_key_id=str(base64.b64decode(scram_a).decode()),
                               aws_secret_access_key=str(base64.b64decode(scram_s).decode()))
             bucket_name = 'kronos-plugin-uploads'
-            s3.upload_file(file, bucket_name, '%s' % ('print_pics/' if pic else 'prints/' + filename.split('/')[-1])
+            s3.upload_file(file, bucket_name, '%s' % ('print_pics/' if pic else 'prints/' + filename.split('/')[-1]))
             self._logger.info('Uploaded %s to S3 Server!' % ("photo" if pic else "timelapse"))
         except Exception as e:
             self._logger.warn("Could not upload: %s" % e)
@@ -116,7 +117,6 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
         return self._settings.get_boolean(['enablePlugin'])
 
     def on_event(self, event, payload):
-        from octoprint.events import Events
         if event == Events.MOVIE_DONE:
             self.upload_timelapse(payload)
         if event == Events.PRINT_CANCELLED:
