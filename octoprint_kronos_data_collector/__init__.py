@@ -44,7 +44,8 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
 
     def get_settings_defaults(self):
         return dict(
-            enablePlugin=True
+            enablePlugin=True,
+            upload_count=0
         )
 
     def get_template_configs(self):
@@ -109,6 +110,9 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
                 file_name = payload['movie_basename']
                 if os.path.getsize(path) > 1500000: #if file size > 1.5 MB, control the influx of extremely small timelapses.
                     self.upload_file(path, file_name, pic=False)
+                    upload_count = self._settings.get(["upload_count"])
+                    self._settings.set(["upload_count"], upload_count + 1)
+                    
         except Exception as e:
             self._logger.warn("Could not upload: %s" % e)
 
