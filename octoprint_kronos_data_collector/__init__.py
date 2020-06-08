@@ -107,7 +107,7 @@ class KronosDataCollector(octoprint.plugin.SettingsPlugin,
             if enablePlugin:
                 path = payload['movie']
                 file_name = payload['movie_basename']
-                if os.path.getsize(path) > 0:  # if file size > 0 MB
+                if os.path.getsize(path) > 1500000: #if file size > 1.5 MB, control the influx of extremely small timelapses.
                     self.upload_file(path, file_name, pic=False)
         except Exception as e:
             self._logger.warn("Could not upload: %s" % e)
